@@ -8,49 +8,8 @@
 
 import { execSync } from "child_process";
 import { Command } from "commander";
-import { resolve } from "path";
+import { setEnvFromOptions } from "./cli/options";
 
-/**
- * Sets environment variables from CLI options
- * @param options Commander options object
- * @returns Updated environment object
- */
-function setEnvFromOptions(options: any): NodeJS.ProcessEnv {
-  const env = { ...process.env };
-
-  if (options.fileIni) {
-    env.CONFIG_FILE_INI = resolve(process.cwd(), options.fileIni);
-  }
-  if (options.credentialIssuerUri) {
-    env.CONFIG_CREDENTIAL_ISSUER_URI = options.credentialIssuerUri;
-  }
-  if (options.presentationAuthorizeUri) {
-    env.CONFIG_PRESENTATION_AUTHORIZE_URI = options.presentationAuthorizeUri;
-  }
-  if (options.credentialTypes) {
-    env.CONFIG_CREDENTIAL_TYPES = options.credentialTypes;
-  }
-  if (options.timeout !== undefined) {
-    env.CONFIG_TIMEOUT = options.timeout.toString();
-  }
-  if (options.maxRetries !== undefined) {
-    env.CONFIG_MAX_RETRIES = options.maxRetries.toString();
-  }
-  if (options.logLevel) {
-    env.CONFIG_LOG_LEVEL = options.logLevel;
-  }
-  if (options.logFile) {
-    env.CONFIG_LOG_FILE = options.logFile;
-  }
-  if (options.port !== undefined) {
-    env.CONFIG_PORT = options.port.toString();
-  }
-  if (options.saveCredential !== undefined) {
-    env.CONFIG_SAVE_CREDENTIAL = options.saveCredential.toString();
-  }
-
-  return env;
-}
 
 const program = new Command();
 

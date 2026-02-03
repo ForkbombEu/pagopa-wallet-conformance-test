@@ -12,6 +12,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "cli:server": "ts-node -r tsconfig-paths/register src/cli-server.ts",
     "ta:server": "ts-node -r tsconfig-paths/register src/trust-anchor/server.ts",
     "types:check": "tsc --noEmit",
     "test": "vitest run",

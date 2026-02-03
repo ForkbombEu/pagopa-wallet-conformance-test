@@ -190,6 +190,38 @@ The pre-configured happy flow test validates the issuance of the `--credential-t
 
 > **Note**: By default, credentials generated during testing are not saved to disk. However, you can configure the tool to save them locally for presentation phase. You can configure that using `config.ini` with `save_credential = true` or using cli option `--save-credential`
 
+## 🌐 CLI REST Server
+
+If you need to orchestrate the CLI through HTTP, you can run the REST wrapper server. The server exposes GET/POST endpoints that map 1:1 to the CLI options (use the same option names you would pass to the CLI). All options are optional and override `config.ini` exactly like the CLI does.
+
+### Start the server
+
+```bash
+pnpm cli:server
+```
+
+By default the server listens on `http://localhost:3002`. You can override the port with `WCT_CLI_SERVER_PORT`.
+
+### Available endpoints
+
+* `GET /health`
+* `GET /commands`
+* `GET|POST /test/issuance`
+* `GET|POST /test/presentation`
+
+### Example request
+
+```bash
+curl -X POST http://localhost:3002/test/issuance \
+  -H "Content-Type: application/json" \
+  -d '{
+    "credentialIssuerUri": "https://issuer.example.com",
+    "credentialTypes": "dc_sd_jwt_EuropeanDisabilityCard",
+    "timeout": 30,
+    "saveCredential": true
+  }'
+```
+
 **📖 For detailed test configuration and customization**, see the comprehensive [Test Configuration Guide](./tests/TEST-CONFIGURATION-GUIDE.md). This guide covers:
 - Quick start with default configurations
 - Custom credential types and multiple configurations
